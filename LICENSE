@@ -1,0 +1,44 @@
+PROPRIETARY SOFTWARE LICENSE AGREEMENT
+
+System Name: Mayon-Cortex Cognitive Architecture
+Developer / Author: BALAVIGNESH M
+Company / Rights Holder: INFIDOS LLP
+Copyright (c) 2026 INFIDOS LLP and BALAVIGNESH M. All Rights Reserved.
+
+==============================================================================
+IMPORTANT — READ CAREFULLY:
+This Proprietary Software License Agreement ("Agreement") is a legal agreement 
+between you (either an individual or a single entity) and INFIDOS LLP along with 
+the developer BALAVIGNESH M ("Licensors") for the software product "Mayon-Cortex" 
+and any associated algorithms, source code, data structures, modules, models, 
+documentation, and artifacts (collectively, the "Software").
+
+1. OWNERSHIP & INTELLECTUAL PROPERTY
+The Software is protected by copyright, trade secret, patent-pending, and other 
+intellectual property laws. All title, ownership rights, and intellectual property 
+rights in and to the Software (including but not limited to any code, architecture, 
+neuro-symbolic graph designs, algorithms, text, and documentation incorporated 
+into the Software) are owned exclusively by INFIDOS LLP and BALAVIGNESH M.
+
+2. RESTRICTIONS
+You may not:
+(a) Copy, distribute, reproduce, disclose, or transfer the Software or any part thereof;
+(b) Reverse engineer, decompile, disassemble, or derive source code or underlying 
+    architectural patterns from the Software;
+(c) Modify, translate, adapt, or create derivative works based on the Software;
+(d) Rent, lease, lend, sell, sublicense, or commercially host the Software;
+(e) Remove, alter, or obscure any proprietary notices, labels, or license headers.
+
+3. CONFIDENTIALITY
+The source code and architecture of the Software constitute proprietary trade 
+secrets and confidential information of INFIDOS LLP and BALAVIGNESH M. You agree 
+to maintain strict confidentiality and take all reasonable precautions to prevent 
+unauthorized disclosure or dissemination.
+
+4. NO WARRANTY & DISCLAIMER
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR 
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, 
+FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-INFRINGEMENT. IN NO EVENT SHALL 
+THE AUTHORS, DEVELOPER, OR INFIDOS LLP BE LIABLE FOR ANY CLAIM, DAMAGES, OR 
+OTHER LIABILITY ARISING FROM, OUT OF, OR IN CONNECTION WITH THE SOFTWARE.
+==============================================================================

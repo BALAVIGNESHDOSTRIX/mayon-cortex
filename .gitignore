@@ -1,0 +1,14 @@
+# Python & Caches
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+
+# Environment & Credentials
+.env
+*.pem
+*.key
+
+# Local Data / Storage
+cortex_storage/
+demo_vision_output/
