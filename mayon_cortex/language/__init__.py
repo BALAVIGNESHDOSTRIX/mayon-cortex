@@ -13,17 +13,17 @@
 # ==============================================================================
 
 """
-Mayon-Cortex Language — Ingestion, Generation, Word Graphs & Prose
-===================================================================
-Universal data loading (PDF, CSV, JSON, SQL), language syntactic parsing,
-hierarchical prose narrative engine, compositional word graphs,
-sentence assembly, Broca decoders, and N-gram models.
+Mayon-Cortex Language — Ingestion, Generation, Word Graphs & Autoregressive Engine
+=================================================================================
+Universal data loading, language parsing, graph-native autoregression,
+hierarchical prose, compositional word graphs, sentence assembly, and Broca decoders.
 """
 
 from mayon_cortex.language.universal_loader import UniversalDataLoader, IngestionReport
 from mayon_cortex.language.language_ingestion import LanguageIngester, IngestionStats
 from mayon_cortex.language.prose_engine import HierarchicalProseEngine, ProseConfig
 from mayon_cortex.language.word_graph import WordGraph, WordGraphGenerator, WordNode, GraphPoetEngine
+from mayon_cortex.language.autoregressive_engine import GraphAutoRegressiveEngine, TextGenerationConfig
 from mayon_cortex.language.sentence_assembler import SentenceAssembler
 from mayon_cortex.language.sentence_templates import SentenceTemplateEngine
 from mayon_cortex.language.broca import BrocaDecoder, BrocaConfig
@@ -61,6 +61,8 @@ __all__ = [
     "WordGraphGenerator",
     "WordNode",
     "GraphPoetEngine",
+    "GraphAutoRegressiveEngine",
+    "TextGenerationConfig",
     "SentenceAssembler",
     "SentenceTemplateEngine",
     "BrocaDecoder",
@@ -68,5 +70,4 @@ __all__ = [
     "BrocaGraphDecoder",
     "BrocaGraphConfig",
     "NGramModel",
-    "SEED_CORPORA",
 ]

@@ -13,11 +13,10 @@
 # ==============================================================================
 
 """
-Mayon-Cortex Reasoning — Multi-Hop Proofs, Logic & Problem Solving
-===================================================================
-Path ranking, formal symbolic logic, deliberative System 2 thinking,
-problem decomposition, legal/ethical judgments, analogies, cross-domain resolution,
-fractal abstraction, and knowledge correlation.
+Mayon-Cortex Reasoning — Multi-Hop Proofs, Logic, Math & Puzzle Solving
+======================================================================
+Path ranking, symbolic logic, System 2 thinking, ARC visual solver,
+symbolic algebra, number theory, linear algebra, calculus, and universal puzzle solvers.
 """
 
 from mayon_cortex.reasoning.path_ranker import PathRanker, ScoredPath
@@ -37,6 +36,30 @@ from mayon_cortex.reasoning.arc_solver import (
     ARCProgramSynthesizer,
     ARCTask,
     ARCSolution,
+)
+from mayon_cortex.reasoning.symbolic_algebra import (
+    Expr,
+    Const,
+    Var,
+    Add,
+    Sub,
+    Mul,
+    Div,
+    Pow,
+    Neg,
+    Polynomial,
+    UniversalEquationSolver,
+    ExprParser,
+    to_expr,
+)
+from mayon_cortex.reasoning.number_theory import NumberTheoryEngine
+from mayon_cortex.reasoning.matrix_engine import MatrixEngine, RowOperation
+from mayon_cortex.reasoning.calculus_engine import CalculusEngine
+from mayon_cortex.reasoning.puzzle_solver import (
+    SudokuSolver,
+    CryptarithmSolver,
+    NQueensSolver,
+    MagicSquareEngine,
 )
 
 __all__ = [
@@ -69,4 +92,25 @@ __all__ = [
     "ARCProgramSynthesizer",
     "ARCTask",
     "ARCSolution",
+    "Expr",
+    "Const",
+    "Var",
+    "Add",
+    "Sub",
+    "Mul",
+    "Div",
+    "Pow",
+    "Neg",
+    "Polynomial",
+    "UniversalEquationSolver",
+    "ExprParser",
+    "to_expr",
+    "NumberTheoryEngine",
+    "MatrixEngine",
+    "RowOperation",
+    "CalculusEngine",
+    "SudokuSolver",
+    "CryptarithmSolver",
+    "NQueensSolver",
+    "MagicSquareEngine",
 ]

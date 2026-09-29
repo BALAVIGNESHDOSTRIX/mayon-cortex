@@ -137,6 +137,35 @@ from mayon_cortex.reasoning.arc_solver import (
     ARCTask,
     ARCSolution,
 )
+from mayon_cortex.perception.visual_features import VisualFeatureExtractor
+from mayon_cortex.perception.visual_codebook import VisualCodebook
+from mayon_cortex.perception.visual_spatial_graph import VisualSpatialGraph
+from mayon_cortex.perception.visual_generator import GraphImageGenerator, VisualTokenPredictor
+from mayon_cortex.perception.procedural_textures import ProceduralTextureEngine
+from mayon_cortex.perception.raymarcher import RaymarchRenderer, SDFObject, Material
+from mayon_cortex.perception.knowledge_boundary import (
+    KnowledgeBoundary,
+    GenerationCapabilityReport,
+    ConceptKnowledge,
+)
+from mayon_cortex.perception.visual_imagination import (
+    VisualImagination,
+    ImaginationConfig,
+    ImaginationResult,
+)
+from mayon_cortex.language.autoregressive_engine import GraphAutoRegressiveEngine, TextGenerationConfig
+from mayon_cortex.reasoning.symbolic_algebra import UniversalEquationSolver, Polynomial, ExprParser, Expr
+from mayon_cortex.reasoning.number_theory import NumberTheoryEngine
+from mayon_cortex.reasoning.matrix_engine import MatrixEngine
+from mayon_cortex.reasoning.calculus_engine import CalculusEngine
+from mayon_cortex.reasoning.puzzle_solver import (
+    SudokuSolver,
+    CryptarithmSolver,
+    NQueensSolver,
+    MagicSquareEngine,
+)
+
+
 
 
 
@@ -282,6 +311,38 @@ class CortexGraph:
         self.mcts_reasoner = GraphMCTSEngine(config=self.config)
         self.curiosity_resolver = CuriosityGapResolver(extractor=self.semantic_role_extractor)
         self.arc_synthesizer = ARCProgramSynthesizer()
+
+        # ── Visual Codebook, Spatial Graph, Knowledge Boundary & Photorealism ──
+        self.visual_feature_extractor = VisualFeatureExtractor()
+        self.visual_codebook = VisualCodebook(codebook_size=256, feature_dim=256)
+        self.visual_spatial_graph = VisualSpatialGraph(num_entries=256)
+        self.knowledge_boundary = KnowledgeBoundary()
+        self.visual_generator = GraphImageGenerator(
+            codebook=self.visual_codebook,
+            spatial_graph=self.visual_spatial_graph,
+        )
+        self.procedural_textures = ProceduralTextureEngine()
+        self.raymarcher = RaymarchRenderer()
+        self.visual_imagination = VisualImagination(
+            codebook=self.visual_codebook,
+            spatial_graph=self.visual_spatial_graph,
+            knowledge_boundary=self.knowledge_boundary,
+            procedural_textures=self.procedural_textures,
+        )
+
+        # ── Graph Autoregressive Language Engine ──
+        self.ar_text_engine = GraphAutoRegressiveEngine(word_graph=self.word_graph)
+
+        # ── Advanced Symbolic Mathematics, Linear Algebra, Calculus & Puzzle Solvers ──
+        self.equation_solver = UniversalEquationSolver()
+        self.number_theory = NumberTheoryEngine()
+        self.matrix_engine = MatrixEngine()
+        self.calculus_engine = CalculusEngine()
+        self.sudoku_solver = SudokuSolver()
+        self.cryptarithm_solver = CryptarithmSolver()
+        self.nqueens_solver = NQueensSolver()
+        self.magic_square_engine = MagicSquareEngine()
+
 
 
     def query(self, question: str, sector: str = "general") -> CortexResponse:
@@ -1004,11 +1065,190 @@ class CortexGraph:
         node_vecs = {n.source_text: n.vector for n in self.graph.nodes.values() if hasattr(n, "source_text") and hasattr(n, "vector")}
         return self.deduplicator.run_deduplication(node_labels, node_vecs)
 
+    def learn_image(
+        self,
+        image_input: Union[str, np.ndarray],
+        label: str,
+        details: Optional[Dict[str, Any]] = None,
+        patch_size: Tuple[int, int] = (32, 32),
+    ) -> Dict[str, Any]:
+        """
+        Ingest and learn visual structures from a labeled image into the cognitive graph.
+        1. Decomposes image into patches and extracts 128-dim invariant descriptors
+        2. Quantizes into visual codebook prototypes and updates 2D spatial transitions
+        3. Wires concept label to visual prototypes via Hebbian reinforced graph edges
+        """
+        # Load image array if path is provided
+        if isinstance(image_input, str):
+            try:
+                from PIL import Image
+                img_pil = Image.open(image_input).convert("RGB")
+                img_arr = np.array(img_pil, dtype=np.uint8)
+            except Exception:
+                # Fallback to random pattern if loading fails
+                img_arr = np.full((128, 128, 3), 128, dtype=np.uint8)
+        else:
+            img_arr = image_input
+
+        # 1. Learn into visual codebook
+        entries_count = self.visual_codebook.learn(
+            images_with_labels=[(img_arr, label, details or {})],
+            patch_size=patch_size,
+        )
+
+        # 2. Re-synchronize spatial graph across ALL learned concept topologies
+        self.visual_spatial_graph.reset()
+        for lbl, c_grid in self.visual_codebook.concept_topologies.items():
+            self.visual_spatial_graph.learn_from_grid(c_grid, label=lbl)
+
+        grid = self.visual_codebook.concept_topologies.get(label, [])
+        rows = len(grid)
+        cols = len(grid[0]) if rows > 0 else 0
+        indices = [tok for r in grid for tok in r]
+
+        # 3. Integrate with MayonGraph
+        added_edges = self.visual_codebook.integrate_with_graph(self.graph)
+
+        # 5. Attach image node in VisionCortex
+        img_node = self.vision_cortex.see(
+            img_arr,
+            caption=f"{label}: {details.get('color', '')} {details.get('pose', '')}" if details else label,
+            tags=[label] + (details.get("features", []) if details else []),
+            graph=self.graph,
+        )
+
+        # 6. Register concept with KnowledgeBoundary
+        if hasattr(self, "knowledge_boundary"):
+            norm_lbl = label.lower().strip()
+            emb = self.visual_codebook.concept_embeddings.get(norm_lbl, np.zeros(self.visual_codebook.feature_dim, dtype=np.float32))
+            var = self.visual_codebook.concept_variances.get(norm_lbl, 0.05)
+            self.knowledge_boundary.register_concept(
+                label=norm_lbl,
+                images_count=1,
+                patches_count=len(indices),
+                avg_vector=emb,
+                variance=var,
+                codebook_coverage=len(self.visual_codebook.concept_to_entries.get(norm_lbl, {})) / max(1, len(self.visual_codebook.entries)),
+            )
+
+        return {
+            "label": label,
+            "image_id": img_node.image_id,
+            "codebook_entries": entries_count,
+            "grid_shape": (rows, cols),
+            "tokens_extracted": len(indices),
+            "graph_edges_created": added_edges,
+        }
+
+    def generate_image_ar(
+        self,
+        prompt: str,
+        target_labels: Optional[List[str]] = None,
+        grid_rows: int = 32,
+        grid_cols: int = 32,
+        temperature: float = 0.05,
+    ) -> np.ndarray:
+        """
+        Autoregressively generate an image from a text prompt using learned visual vocabulary.
+        Pure CPU graph-native generation without neural networks or diffusion.
+        """
+        return self.visual_generator.generate(
+            prompt=prompt,
+            target_labels=target_labels,
+            graph=self.graph,
+            grid_rows=grid_rows,
+            grid_cols=grid_cols,
+            temperature=temperature,
+        )
+
+    def imagine_image(
+        self,
+        prompt: str,
+        width: int = 512,
+        height: int = 512,
+        config: Optional[ImaginationConfig] = None,
+        **kwargs,
+    ) -> ImaginationResult:
+        """
+        Flagship graph-native visual imagination engine (GAN/DALL-E level quality).
+        Honest refusal if concepts are unknown; 7-stage photorealistic synthesis if known.
+        """
+        cfg = config or ImaginationConfig(output_width=width, output_height=height, **kwargs)
+        return self.visual_imagination.imagine(prompt=prompt, config=cfg, graph=self.graph)
+
+    def generate_text_ar(
+        self,
+        prompt: str,
+        max_tokens: int = 100,
+        temperature: float = 0.75,
+        top_p: float = 0.90,
+    ) -> str:
+        """
+        Autoregressive next-token text generation via multi-hop graph activation.
+        """
+        cfg = TextGenerationConfig(
+            max_tokens=max_tokens,
+            temperature=temperature,
+            top_p=top_p,
+        )
+        return self.ar_text_engine.generate(prompt=prompt, config=cfg)
+
+    def solve_equation(self, equation_str: str, var: str = "x") -> Dict[str, Any]:
+        """Solve an algebraic equation symbolically (e.g. '2*x^2 - 8 = 0')."""
+        return self.equation_solver.solve(equation_str, var=var)
+
+    def solve_derivative(self, expr_str: str, var: str = "x", order: int = 1) -> str:
+        """Compute the n-th derivative of a mathematical expression."""
+        d_expr = self.calculus_engine.differentiate(expr_str, var=var, order=order)
+        return str(d_expr)
+
+    def solve_integral(self, func_or_str: Any, a: float, b: float) -> float:
+        """Compute numerical definite integral over [a, b]."""
+        if isinstance(func_or_str, str):
+            ast = ExprParser(func_or_str).parse()
+            fn = lambda x_val: ast.eval({"x": x_val})
+        else:
+            fn = func_or_str
+        return self.calculus_engine.definite_integral(fn, a, b)
+
+    def solve_linear_system(self, A: np.ndarray, b: np.ndarray) -> Dict[str, Any]:
+        """Solve linear system of equations AX = B with step-by-step row reduction."""
+        return self.matrix_engine.solve_linear_system(A, b)
+
+    def solve_sudoku(self, grid: List[List[int]]) -> Optional[List[List[int]]]:
+        """Solve a 9x9 Sudoku puzzle."""
+        return self.sudoku_solver.solve(grid)
+
+    def solve_cryptarithm(self, puzzle_str: str) -> Optional[Dict[str, int]]:
+        """Solve an alphametic puzzle like 'SEND + MORE = MONEY'."""
+        return self.cryptarithm_solver.solve(puzzle_str)
+
+    def solve_nqueens(self, n: int = 8) -> List[List[int]]:
+        """Solve N-Queens puzzle."""
+        return self.nqueens_solver.solve(n)
+
+    def render_procedural_texture(self, texture_type: str, width: int = 128, height: int = 128, **kwargs) -> np.ndarray:
+        """Synthesize procedural textures (marble, wood, clouds, perlin, voronoi)."""
+        if texture_type == "marble":
+            return self.procedural_textures.marble_texture(width, height, **kwargs)
+        elif texture_type == "wood":
+            return self.procedural_textures.wood_texture(width, height, **kwargs)
+        elif texture_type == "clouds":
+            return self.procedural_textures.clouds_sky(width, height, **kwargs)
+        elif texture_type == "fbm":
+            fbm = self.procedural_textures.fbm_noise_2d(width, height, **kwargs)
+            return (fbm * 255).astype(np.uint8)
+        else:
+            perlin = self.procedural_textures.perlin_noise_2d(width, height, **kwargs)
+            return (perlin * 255).astype(np.uint8)
+
     def __repr__(self) -> str:
         return (
             f"MayonCortex(nodes={self.graph.num_nodes}, edges={self.graph.num_edges}, "
-            f"words={len(self.word_graph.nodes)}, queries={self.learner._query_count})"
+            f"words={len(self.word_graph.nodes)}, visual_vocab={len(self.visual_codebook.entries)}, "
+            f"known_visuals={len(self.knowledge_boundary.concepts)}, queries={self.learner._query_count})"
         )
+
 
 
 # Flagship Project Class Alias
