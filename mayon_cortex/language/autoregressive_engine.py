@@ -27,7 +27,7 @@ Replaces neural transformer next-token prediction with pure graph traversal:
 
 import math
 import re
-from collections import defaultdict, deque
+from collections import Counter, defaultdict, deque
 from dataclasses import dataclass, field
 from typing import Any, Dict, List, Optional, Set, Tuple
 import numpy as np

@@ -137,6 +137,8 @@ from mayon_cortex.reasoning.arc_solver import (
     ARCTask,
     ARCSolution,
 )
+from mayon_cortex.reasoning.cortical_arc_reasoner import CorticalARCReasoner, CorticalHypothesis
+from mayon_cortex.perception.scene_graph import ARCSpatialSceneGraph
 from mayon_cortex.perception.visual_features import VisualFeatureExtractor
 from mayon_cortex.perception.visual_codebook import VisualCodebook
 from mayon_cortex.perception.visual_spatial_graph import VisualSpatialGraph
@@ -342,6 +344,7 @@ class CortexGraph:
         self.cryptarithm_solver = CryptarithmSolver()
         self.nqueens_solver = NQueensSolver()
         self.magic_square_engine = MagicSquareEngine()
+        self.arc_reasoner = CorticalARCReasoner(cortex=self)
 
 
 
@@ -1226,6 +1229,15 @@ class CortexGraph:
     def solve_nqueens(self, n: int = 8) -> List[List[int]]:
         """Solve N-Queens puzzle."""
         return self.nqueens_solver.solve(n)
+
+    def solve_arc(self, task: Union[ARCTask, Dict[str, Any], str, Path]) -> ARCSolution:
+        """
+        Solve an ARC-AGI visual reasoning task through the Cortical Graph.
+        Converts 2D visual demonstrations into spatial relation graphs,
+        induces the abstract transformation rule via analogical graph mapping,
+        and verifies 100% precision on training examples before predicting test output.
+        """
+        return self.arc_reasoner.solve(task)
 
     def render_procedural_texture(self, texture_type: str, width: int = 128, height: int = 128, **kwargs) -> np.ndarray:
         """Synthesize procedural textures (marble, wood, clouds, perlin, voronoi)."""

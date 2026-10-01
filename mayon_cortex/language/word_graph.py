@@ -234,6 +234,13 @@ class WordNode:
     def total_outgoing(self) -> float:
         return sum(self.next_words.values()) or 1.0
 
+    @property
+    def pos(self) -> str:
+        """Dominant POS tag of the word node."""
+        if self.pos_tags:
+            return next(iter(self.pos_tags))
+        return guess_pos(self.word)
+
 
 @dataclass
 class BeamCandidate:
@@ -488,6 +495,23 @@ class WordGraph:
 
         self._matrix_stale = True
         return node
+
+    def get_node(self, word: str) -> Optional[WordNode]:
+        """Retrieve existing WordNode by token, or None if not found in the graph."""
+        cleaned = word.strip().lower()
+        return self.nodes.get(cleaned)
+
+    def get_all_nodes(self) -> List[WordNode]:
+        """Return list of all WordNodes in the graph."""
+        return list(self.nodes.values())
+
+    def learn_text(self, text: str, sector: str = "general"):
+        """Ingest text string into the word graph sentence by sentence."""
+        sentences = re.split(r"[.!?]+", text)
+        for s in sentences:
+            tokens = [w.strip().lower() for w in re.findall(r"\b\w+\b|[.,!?;]", s) if w.strip()]
+            if tokens:
+                self.add_sentence_tokens(tokens, sector=sector)
 
     def add_sentence_tokens(
         self,

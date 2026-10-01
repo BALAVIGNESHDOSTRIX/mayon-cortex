@@ -21,7 +21,7 @@ textures, raymarching, and spatial scene graphs.
 """
 
 from mayon_cortex.perception.vision import VisionCortex, ImageNode, VisualEncoder
-from mayon_cortex.perception.scene_graph import SceneGraph, VisualObject, SpatialRelation
+from mayon_cortex.perception.scene_graph import SceneGraph, ARCSpatialSceneGraph, VisualObject, SpatialRelation
 from mayon_cortex.perception.visual_features import VisualFeatureExtractor, PatchInfo
 from mayon_cortex.perception.visual_codebook import VisualCodebook, CodebookEntry
 from mayon_cortex.perception.visual_spatial_graph import VisualSpatialGraph, SpatialEdge
@@ -44,6 +44,7 @@ __all__ = [
     "ImageNode",
     "VisualEncoder",
     "SceneGraph",
+    "ARCSpatialSceneGraph",
     "VisualObject",
     "SpatialRelation",
     "VisualFeatureExtractor",

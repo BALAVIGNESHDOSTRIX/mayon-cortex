@@ -28,7 +28,8 @@ from mayon_cortex.reasoning.puzzle_solver import SudokuSolver, CryptarithmSolver
 
 def test_autoregressive_text_engine():
     wg = WordGraph()
-    wg.learn_text("the cat sat on the mat. the quick dog jumped over the fence.")
+    for sentence in ["the cat sat on the mat", "the quick dog jumped over the fence"]:
+        wg.add_sentence_tokens(sentence.split())
     engine = GraphAutoRegressiveEngine(word_graph=wg)
 
     text = engine.generate("the cat", max_tokens=10, temperature=0.7)

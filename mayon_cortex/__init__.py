@@ -92,6 +92,17 @@ from mayon_cortex.reasoning.analogy import AnalogyEngine, AnalogyResult
 from mayon_cortex.reasoning.cross_domain import CrossDomainResolver, CrossDomainEvidence
 from mayon_cortex.reasoning.abstraction import FractalAbstractionEngine, AbstractConcept
 from mayon_cortex.reasoning.knowledge_correlation import KnowledgeCorrelator, CorrelationPath, SynthesisResult
+from mayon_cortex.reasoning.cortical_arc_reasoner import CorticalARCReasoner, CorticalHypothesis
+from mayon_cortex.reasoning.arc_solver import (
+    ARCGrid,
+    ARCObject,
+    ARCPerception,
+    ARCDSL,
+    ARCProgramSynthesizer,
+    IntelligentSynthesizer,
+    ARCTask,
+    ARCSolution,
+)
 
 # 5. Executive
 from mayon_cortex.executive.executive import (
@@ -142,7 +153,7 @@ from mayon_cortex.language.ngram_model import NGramModel
 
 # 9. Perception
 from mayon_cortex.perception.vision import VisionCortex, ImageNode
-from mayon_cortex.perception.scene_graph import SceneGraph, VisualObject, SpatialRelation
+from mayon_cortex.perception.scene_graph import SceneGraph, ARCSpatialSceneGraph, VisualObject, SpatialRelation
 
 # 10. Imagination
 from mayon_cortex.imagination.imagination import (
@@ -262,6 +273,16 @@ __all__ = [
     "KnowledgeCorrelator",
     "CorrelationPath",
     "SynthesisResult",
+    "CorticalARCReasoner",
+    "CorticalHypothesis",
+    "ARCGrid",
+    "ARCObject",
+    "ARCPerception",
+    "ARCDSL",
+    "ARCProgramSynthesizer",
+    "IntelligentSynthesizer",
+    "ARCTask",
+    "ARCSolution",
 
     # Executive
     "ExecutiveController",
@@ -321,6 +342,7 @@ __all__ = [
     "VisionCortex",
     "ImageNode",
     "SceneGraph",
+    "ARCSpatialSceneGraph",
     "VisualObject",
     "SpatialRelation",
 

@@ -34,9 +34,11 @@ from mayon_cortex.reasoning.arc_solver import (
     ARCPerception,
     ARCDSL,
     ARCProgramSynthesizer,
+    IntelligentSynthesizer,
     ARCTask,
     ARCSolution,
 )
+from mayon_cortex.reasoning.cortical_arc_reasoner import CorticalARCReasoner, CorticalHypothesis
 from mayon_cortex.reasoning.symbolic_algebra import (
     Expr,
     Const,
@@ -90,6 +92,9 @@ __all__ = [
     "ARCPerception",
     "ARCDSL",
     "ARCProgramSynthesizer",
+    "IntelligentSynthesizer",
+    "CorticalARCReasoner",
+    "CorticalHypothesis",
     "ARCTask",
     "ARCSolution",
     "Expr",
