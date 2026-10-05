@@ -151,6 +151,17 @@ from mayon_cortex.language.broca import BrocaDecoder, BrocaConfig
 from mayon_cortex.language.broca_graph import BrocaGraphDecoder, BrocaGraphConfig
 from mayon_cortex.language.ngram_model import NGramModel
 
+# 8.1 Fluency Upgrades (New)
+from mayon_cortex.language.broca_trainer import BrocaSelfTrainer, BrocaVocabulary, TrainingStats
+from mayon_cortex.language.grammar_inducer import GrammarPatternInducer, GrammarPattern, InductionStats
+from mayon_cortex.language.discourse_coherence import (
+    DiscourseCoherenceTracker,
+    TopicMemory,
+    CoherenceScorer,
+    ParagraphPlan,
+    DiscourseRelation,
+)
+
 # 9. Perception
 from mayon_cortex.perception.vision import VisionCortex, ImageNode
 from mayon_cortex.perception.scene_graph import SceneGraph, ARCSpatialSceneGraph, VisualObject, SpatialRelation

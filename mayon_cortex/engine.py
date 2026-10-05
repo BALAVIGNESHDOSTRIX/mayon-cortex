@@ -142,18 +142,10 @@ from mayon_cortex.perception.scene_graph import ARCSpatialSceneGraph
 from mayon_cortex.perception.visual_features import VisualFeatureExtractor
 from mayon_cortex.perception.visual_codebook import VisualCodebook
 from mayon_cortex.perception.visual_spatial_graph import VisualSpatialGraph
-from mayon_cortex.perception.visual_generator import GraphImageGenerator, VisualTokenPredictor
-from mayon_cortex.perception.procedural_textures import ProceduralTextureEngine
-from mayon_cortex.perception.raymarcher import RaymarchRenderer, SDFObject, Material
 from mayon_cortex.perception.knowledge_boundary import (
     KnowledgeBoundary,
     GenerationCapabilityReport,
     ConceptKnowledge,
-)
-from mayon_cortex.perception.visual_imagination import (
-    VisualImagination,
-    ImaginationConfig,
-    ImaginationResult,
 )
 from mayon_cortex.language.autoregressive_engine import GraphAutoRegressiveEngine, TextGenerationConfig
 from mayon_cortex.reasoning.symbolic_algebra import UniversalEquationSolver, Polynomial, ExprParser, Expr
@@ -314,23 +306,11 @@ class CortexGraph:
         self.curiosity_resolver = CuriosityGapResolver(extractor=self.semantic_role_extractor)
         self.arc_synthesizer = ARCProgramSynthesizer()
 
-        # ── Visual Codebook, Spatial Graph, Knowledge Boundary & Photorealism ──
+        # ── Visual Feature Extraction, Codebook & Spatial Graph (Multimodal Ingestion) ──
         self.visual_feature_extractor = VisualFeatureExtractor()
         self.visual_codebook = VisualCodebook(codebook_size=256, feature_dim=256)
         self.visual_spatial_graph = VisualSpatialGraph(num_entries=256)
         self.knowledge_boundary = KnowledgeBoundary()
-        self.visual_generator = GraphImageGenerator(
-            codebook=self.visual_codebook,
-            spatial_graph=self.visual_spatial_graph,
-        )
-        self.procedural_textures = ProceduralTextureEngine()
-        self.raymarcher = RaymarchRenderer()
-        self.visual_imagination = VisualImagination(
-            codebook=self.visual_codebook,
-            spatial_graph=self.visual_spatial_graph,
-            knowledge_boundary=self.knowledge_boundary,
-            procedural_textures=self.procedural_textures,
-        )
 
         # ── Graph Autoregressive Language Engine ──
         self.ar_text_engine = GraphAutoRegressiveEngine(word_graph=self.word_graph)
@@ -1143,41 +1123,7 @@ class CortexGraph:
             "graph_edges_created": added_edges,
         }
 
-    def generate_image_ar(
-        self,
-        prompt: str,
-        target_labels: Optional[List[str]] = None,
-        grid_rows: int = 32,
-        grid_cols: int = 32,
-        temperature: float = 0.05,
-    ) -> np.ndarray:
-        """
-        Autoregressively generate an image from a text prompt using learned visual vocabulary.
-        Pure CPU graph-native generation without neural networks or diffusion.
-        """
-        return self.visual_generator.generate(
-            prompt=prompt,
-            target_labels=target_labels,
-            graph=self.graph,
-            grid_rows=grid_rows,
-            grid_cols=grid_cols,
-            temperature=temperature,
-        )
 
-    def imagine_image(
-        self,
-        prompt: str,
-        width: int = 512,
-        height: int = 512,
-        config: Optional[ImaginationConfig] = None,
-        **kwargs,
-    ) -> ImaginationResult:
-        """
-        Flagship graph-native visual imagination engine (GAN/DALL-E level quality).
-        Honest refusal if concepts are unknown; 7-stage photorealistic synthesis if known.
-        """
-        cfg = config or ImaginationConfig(output_width=width, output_height=height, **kwargs)
-        return self.visual_imagination.imagine(prompt=prompt, config=cfg, graph=self.graph)
 
     def generate_text_ar(
         self,

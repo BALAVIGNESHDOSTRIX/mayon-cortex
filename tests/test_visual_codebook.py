@@ -20,9 +20,6 @@ import pytest
 from mayon_cortex.perception.visual_features import VisualFeatureExtractor
 from mayon_cortex.perception.visual_codebook import VisualCodebook
 from mayon_cortex.perception.visual_spatial_graph import VisualSpatialGraph
-from mayon_cortex.perception.visual_generator import VisualTokenPredictor, GraphImageGenerator
-from mayon_cortex.perception.procedural_textures import ProceduralTextureEngine
-from mayon_cortex.perception.raymarcher import RaymarchRenderer, SDFObject, Material
 
 
 def test_visual_feature_extractor():
@@ -116,40 +113,3 @@ def test_visual_spatial_graph():
 
     prob_below = spatial_graph.get_transition_probability(1, 4, "below")
     assert prob_below > 0.0
-
-
-def test_procedural_textures():
-    engine = ProceduralTextureEngine()
-
-    perlin = engine.perlin_noise_2d(64, 64)
-    assert perlin.shape == (64, 64)
-    assert 0.0 <= perlin.min() and perlin.max() <= 1.0
-
-    fbm = engine.fbm_noise_2d(64, 64)
-    assert fbm.shape == (64, 64)
-
-    marble = engine.marble_texture(64, 64)
-    assert marble.shape == (64, 64, 3)
-    assert marble.dtype == np.uint8
-
-    wood = engine.wood_texture(64, 64)
-    assert wood.shape == (64, 64, 3)
-
-    clouds = engine.clouds_sky(64, 64)
-    assert clouds.shape == (64, 64, 3)
-
-
-def test_raymarcher_renderer():
-    renderer = RaymarchRenderer(max_steps=16, max_dist=10.0)
-
-    objects = [
-        SDFObject(
-            name="sphere",
-            sdf_fn=lambda p: RaymarchRenderer.sdf_sphere(p, np.array([0.0, 0.0, 0.0]), 1.0),
-            material=Material(albedo=(0.9, 0.2, 0.2)),
-        )
-    ]
-
-    img = renderer.render_scene(objects, width=32, height=32)
-    assert img.shape == (32, 32, 3)
-    assert img.dtype == np.uint8

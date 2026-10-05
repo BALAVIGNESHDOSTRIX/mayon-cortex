@@ -13,11 +13,10 @@
 # ==============================================================================
 
 """
-Mayon-Cortex Perception — Vision, Codebooks, Multimodal Graphs & Rendering
+Mayon-Cortex Perception — Multimodal Input Understanding & Spatial Graphs
 =========================================================================
-Visual feature extraction, VQ-codebooks, spatial graphs, autoregressive visual token
-generation, knowledge boundary arbitration, visual imagination engine, procedural
-textures, raymarching, and spatial scene graphs.
+Visual feature extraction, VQ-codebooks, spatial scene graphs, and knowledge
+boundary arbitration for multimodal graph ingestion.
 """
 
 from mayon_cortex.perception.vision import VisionCortex, ImageNode, VisualEncoder
@@ -25,18 +24,10 @@ from mayon_cortex.perception.scene_graph import SceneGraph, ARCSpatialSceneGraph
 from mayon_cortex.perception.visual_features import VisualFeatureExtractor, PatchInfo
 from mayon_cortex.perception.visual_codebook import VisualCodebook, CodebookEntry
 from mayon_cortex.perception.visual_spatial_graph import VisualSpatialGraph, SpatialEdge
-from mayon_cortex.perception.visual_generator import VisualTokenPredictor, GraphImageGenerator, GenerationConfig
-from mayon_cortex.perception.procedural_textures import ProceduralTextureEngine
-from mayon_cortex.perception.raymarcher import RaymarchRenderer, SDFObject, Material
 from mayon_cortex.perception.knowledge_boundary import (
     KnowledgeBoundary,
     ConceptKnowledge,
     GenerationCapabilityReport,
-)
-from mayon_cortex.perception.visual_imagination import (
-    VisualImagination,
-    ImaginationConfig,
-    ImaginationResult,
 )
 
 __all__ = [
@@ -53,17 +44,7 @@ __all__ = [
     "CodebookEntry",
     "VisualSpatialGraph",
     "SpatialEdge",
-    "VisualTokenPredictor",
-    "GraphImageGenerator",
-    "GenerationConfig",
-    "ProceduralTextureEngine",
-    "RaymarchRenderer",
-    "SDFObject",
-    "Material",
     "KnowledgeBoundary",
     "ConceptKnowledge",
     "GenerationCapabilityReport",
-    "VisualImagination",
-    "ImaginationConfig",
-    "ImaginationResult",
 ]
