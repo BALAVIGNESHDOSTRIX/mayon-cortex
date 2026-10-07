@@ -2,7 +2,7 @@
 
 ```
 Document Version: 1.0.0
-Classification: Proprietary / Deep-Tech Architecture
+Classification: Dual Licensed (AGPL-3.0 / Commercial) Deep-Tech Architecture
 System Name: Mayon-Cortex Cognitive Engine
 Developer: BALAVIGNESH M
 Company: INFIDOS LLP

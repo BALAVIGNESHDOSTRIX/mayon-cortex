@@ -348,8 +348,12 @@ Benchmark harness for ARC-AGI 400 evaluation tasks is included.
 
 ## License
 
-Proprietary — INFIDOS LLP / BALAVIGNESH M (c) 2026.  
-All rights reserved. Unauthorized copying, modification, or distribution is prohibited.
+Mayon-Cortex is dual-licensed under:
+
+- **Open Source:** [GNU Affero General Public License v3.0 (AGPL-3.0)](LICENSE) — Free for open-source development, academic research, and non-commercial evaluation. Under AGPL-3.0, any derivative works or services utilizing Mayon-Cortex over a network must disclose their full source code.
+- **Commercial License:** For proprietary, closed-source, internal enterprise, or SaaS deployments exempt from AGPL-3.0 copyleft obligations. See [COMMERCIAL_LICENSE.md](COMMERCIAL_LICENSE.md) or contact [balavignesh@infidos.com](mailto:balavignesh@infidos.com).
+
+Copyright (c) 2026 INFIDOS LLP / BALAVIGNESH M. All rights reserved.
 
 ---
 

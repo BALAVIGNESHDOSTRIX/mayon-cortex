@@ -2,7 +2,7 @@
 
 ```
 Document Version: 1.0.0
-Classification: Proprietary / Deep-Tech Algorithm Specification
+Classification: Dual Licensed (AGPL-3.0 / Commercial) Deep-Tech Algorithm Specification
 Engine Name: Mayon-Cortex (mayon_cortex)
 Developer: BALAVIGNESH M
 Company: INFIDOS LLP

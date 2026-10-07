@@ -5,7 +5,7 @@ Document Version: 1.0.0
 Developer: BALAVIGNESH M
 Company: INFIDOS LLP
 System: Mayon-Cortex Cognitive Architecture
-Classification: Proprietary / Deep-Tech Technical Specification
+Classification: Dual Licensed (AGPL-3.0 / Commercial) Deep-Tech Technical Specification
 Runtime: 100% Commodity CPU (Zero GPU, Zero CUDA Dependencies)
 ```
 

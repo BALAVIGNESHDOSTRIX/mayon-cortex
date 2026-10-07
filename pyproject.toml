@@ -8,7 +8,16 @@ version = "1.0.0"
 description = "A biologically-inspired, neuro-symbolic cognitive architecture operating on pure CPU with zero GPU, zero backprop, and 100% deterministic reasoning."
 readme = "README.md"
 requires-python = ">=3.9"
-license = {text = "Proprietary - INFIDOS LLP / BALAVIGNESH M"}
+license = {text = "AGPL-3.0-or-later OR Commercial"}
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
 authors = [
     {name = "BALAVIGNESH M", email = "balavignesh@infidos.com"},
     {name = "INFIDOS LLP", email = "contact@infidos.com"}
