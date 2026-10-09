@@ -1,0 +1,32 @@
+{
+  "medical_pharmacology": [
+    "Metformin is a biguanide antidiabetic medication that treats Type 2 Diabetes Mellitus.",
+    "Metformin decreases hepatic glucose production and improves intestinal glucose absorption.",
+    "Severe Renal Impairment with eGFR below 30 contraindicates Metformin therapy.",
+    "Lactic Acidosis is a life-threatening complication of Metformin accumulation in kidney failure.",
+    "Linagliptin is a dipeptidyl peptidase-4 inhibitor that treats Type 2 Diabetes Mellitus.",
+    "Linagliptin is eliminated via enterohepatic bile excretion and is safe in Severe Renal Impairment.",
+    "Empagliflozin is an SGLT2 inhibitor that reduces cardiovascular mortality in diabetes.",
+    "Empagliflozin requires caution in severe volume depletion and hypotension."
+  ],
+  "legal_compliance": [
+    "General Data Protection Regulation requires explicit user consent for processing personal data.",
+    "Transferring unencrypted personal data across international borders violates GDPR Article 44.",
+    "GDPR Article 83 imposes severe regulatory fines for unauthorized data disclosure.",
+    "Data Protection Impact Assessment is mandatory before high-risk automated processing.",
+    "Enterprise Compliance Policy mandates zero unencrypted external data transmissions."
+  ],
+  "aerospace_engineering": [
+    "Turbofan jet engine thrust is proportional to air mass flow rate and exhaust velocity delta.",
+    "High turbine inlet temperature increases thermal efficiency but accelerates blade creep fatigue.",
+    "Nickel-based superalloys with ceramic thermal barrier coatings resist high turbine inlet temperatures.",
+    "Structural wing flutter occurs when aerodynamic forces couple with natural vibration frequencies.",
+    "Active aeroelastic flutter suppression systems mitigate wing vibration risks."
+  ],
+  "financial_risk": [
+    "Basel III regulatory framework mandates a minimum Tier 1 capital adequacy ratio of 6 percent.",
+    "Credit default swaps provide synthetic hedge protection against counterparty bond defaults.",
+    "Liquidity Coverage Ratio requires sufficient high-quality liquid assets to survive 30-day stress.",
+    "Unhedged derivative exposure exceeding risk limits triggers mandatory collateral margin calls."
+  ]
+}

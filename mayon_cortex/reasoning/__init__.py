@@ -64,6 +64,13 @@ from mayon_cortex.reasoning.puzzle_solver import (
     NQueensSolver,
     MagicSquareEngine,
 )
+from mayon_cortex.reasoning.code_reasoner import (
+    CodeGraphIngester,
+    CodeBugDiagnoser,
+    CodeFixGenerator,
+    BugDiagnosis,
+    CodeSymbol,
+)
 
 __all__ = [
     "PathRanker",
@@ -119,4 +126,9 @@ __all__ = [
     "CryptarithmSolver",
     "NQueensSolver",
     "MagicSquareEngine",
+    "CodeGraphIngester",
+    "CodeBugDiagnoser",
+    "CodeFixGenerator",
+    "BugDiagnosis",
+    "CodeSymbol",
 ]

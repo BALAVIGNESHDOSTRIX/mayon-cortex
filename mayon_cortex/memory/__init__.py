@@ -17,13 +17,14 @@
 Mayon-Cortex Memory — Associative, Episodic & HDC Memory Systems
 =================================================================
 Working memory buffers, case-based precedent reasoning, thought scratchpads,
-and 10,000-dimensional hypervector bit algebra memory.
+10,000-dimensional hypervector bit algebra memory, and persistent error memory.
 """
 
 from mayon_cortex.memory.working_memory import WorkingMemory
 from mayon_cortex.memory.case_memory import CaseMemory, PrecedentCase, CaseMatch
 from mayon_cortex.memory.hyperdimensional import HyperVector, HyperdimensionalMemory
 from mayon_cortex.memory.thought_scratchpad import ThoughtScratchpad, ScratchpadStep
+from mayon_cortex.memory.error_memory import ErrorMemory, ErrorRecord
 
 __all__ = [
     "WorkingMemory",
@@ -34,4 +35,6 @@ __all__ = [
     "HyperdimensionalMemory",
     "ThoughtScratchpad",
     "ScratchpadStep",
+    "ErrorMemory",
+    "ErrorRecord",
 ]

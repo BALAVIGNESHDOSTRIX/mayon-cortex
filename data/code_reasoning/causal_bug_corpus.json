@@ -1,0 +1,78 @@
+[
+  {
+    "bug_id": "BUG-001-NULL-DEREF",
+    "root_cause_pattern": "UncheckedNullableDereference",
+    "category": "DefensiveProgramming",
+    "causal_chain": [
+      "Function `fetch_user()` returns None when user record is not found in database",
+      "Caller function directly invokes `.strip()` on `user.name` without null check",
+      "Calling a method on None raises `AttributeError: 'NoneType' object has no attribute 'strip'`"
+    ],
+    "invariant_rule": "Every function returning an optional/nullable object must be guarded by an explicit null check or optional chaining before member access.",
+    "symptom": {
+      "error_type": "AttributeError",
+      "traceback_pattern": "'NoneType' object has no attribute",
+      "faulty_code": "user = fetch_user(uid)\nreturn user.name.strip()"
+    },
+    "fix_template": "if {target} is not None:\n    return {target}.{member}\nreturn None",
+    "concrete_diff": "- return user.name.strip()\n+ if user is not None and user.name is not None:\n+     return user.name.strip()\n+ return None",
+    "transferable_domains": ["database_lookups", "api_responses", "json_parsing", "cache_lookups"]
+  },
+  {
+    "bug_id": "BUG-002-RESOURCE-LEAK",
+    "root_cause_pattern": "MissingContextResourceCleanup",
+    "category": "ResourceManagement",
+    "causal_chain": [
+      "Function opens a file or network socket via `open()` or `socket.connect()`",
+      "An unexpected exception occurs before `close()` is reached",
+      "File descriptor / socket remains open, causing memory leak and file lock exhaustion"
+    ],
+    "invariant_rule": "All OS resources (files, sockets, DB connections) must be encapsulated in a context manager (`with` block) to ensure deterministic cleanup on exit.",
+    "symptom": {
+      "error_type": "ResourceWarning",
+      "traceback_pattern": "unclosed file <_io.TextIOWrapper",
+      "faulty_code": "f = open(filepath, 'w')\nf.write(payload)\nf.close()"
+    },
+    "fix_template": "with open({target}, {mode}) as f:\n    f.write({payload})",
+    "concrete_diff": "- f = open(filepath, 'w')\n- f.write(payload)\n- f.close()\n+ with open(filepath, 'w') as f:\n+     f.write(payload)",
+    "transferable_domains": ["file_io", "database_sessions", "http_connections", "thread_locks"]
+  },
+  {
+    "bug_id": "BUG-003-OFF-BY-ONE",
+    "root_cause_pattern": "InclusiveUpperBoundaryOverflow",
+    "category": "BoundaryConditions",
+    "causal_chain": [
+      "Loop or slice indexes array using length `len(arr)` instead of `len(arr) - 1`",
+      "Zero-indexed sequences have maximum valid index of `length - 1`",
+      "Attempting to read `arr[len(arr)]` raises `IndexError: list index out of range`"
+    ],
+    "invariant_rule": "For zero-indexed arrays of size N, traversal or indexing must strictly stay within range [0, N-1].",
+    "symptom": {
+      "error_type": "IndexError",
+      "traceback_pattern": "list index out of range",
+      "faulty_code": "for i in range(len(items) + 1):\n    print(items[i])"
+    },
+    "fix_template": "for i in range(len({target})):\n    print({target}[i])",
+    "concrete_diff": "- for i in range(len(items) + 1):\n+ for i in range(len(items)):",
+    "transferable_domains": ["array_traversal", "sliding_window", "pagination", "matrix_coordinates"]
+  },
+  {
+    "bug_id": "BUG-004-MUTABLE-DEFAULT",
+    "root_cause_pattern": "SharedMutableDefaultArgument",
+    "category": "StatePollution",
+    "causal_chain": [
+      "Function definition specifies default argument as a mutable object `def add(x, log=[])`",
+      "Default arguments in Python are evaluated once at module load time, not per call",
+      "All invocations share the same list instance, leaking state across independent callers"
+    ],
+    "invariant_rule": "Never use mutable containers (lists, dicts, sets) as default argument values; use `None` and initialize inside the function body.",
+    "symptom": {
+      "error_type": "StatePollutionError",
+      "traceback_pattern": "unexpected persistent elements in accumulator",
+      "faulty_code": "def process_batch(items, results=[]):\n    results.extend(items)\n    return results"
+    },
+    "fix_template": "def {func}({args}, {param}=None):\n    if {param} is None:\n        {param} = []",
+    "concrete_diff": "- def process_batch(items, results=[]):\n+ def process_batch(items, results=None):\n+     if results is None:\n+         results = []",
+    "transferable_domains": ["accumulator_functions", "class_constructors", "recursive_helpers"]
+  }
+]

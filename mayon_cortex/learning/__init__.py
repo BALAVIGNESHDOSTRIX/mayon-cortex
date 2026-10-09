@@ -18,7 +18,8 @@ Mayon-Cortex Learning — Plasticity, Local Learning & Curriculum
 ================================================================
 Real-time Hebbian synaptic learning, Hinton Forward-Forward contrastive learning,
 hierarchical predictive coding surprise minimization, curriculum teaching,
-and seed bootstrapping.
+seed bootstrapping, autonomous curiosity-driven self-expansion, and
+recursive self-improvement.
 """
 
 from mayon_cortex.learning.online_learner import OnlineLearner
@@ -26,6 +27,16 @@ from mayon_cortex.learning.forward_forward import ForwardForwardLearner, Goodnes
 from mayon_cortex.learning.predictive_coder import PredictiveCoder, PredictionError
 from mayon_cortex.learning.teacher import Teacher
 from mayon_cortex.learning.bootstrap import KnowledgeBootstrapper
+from mayon_cortex.learning.autonomous_learner import (
+    AutonomousLearner,
+    KnowledgeGap,
+    ExpansionResult,
+)
+from mayon_cortex.learning.self_improvement import (
+    SelfImprovementEngine,
+    ProofQualityScore,
+    ImprovementAction,
+)
 
 __all__ = [
     "OnlineLearner",
@@ -35,4 +46,10 @@ __all__ = [
     "PredictionError",
     "Teacher",
     "KnowledgeBootstrapper",
+    "AutonomousLearner",
+    "KnowledgeGap",
+    "ExpansionResult",
+    "SelfImprovementEngine",
+    "ProofQualityScore",
+    "ImprovementAction",
 ]

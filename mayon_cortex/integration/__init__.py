@@ -16,9 +16,9 @@
 """
 Mayon-Cortex Integration Layer
 ==============================
-Provides high-level adapters, bridges, and MCP (Model Context Protocol)
-servers to interface Mayon-Cortex neuro-symbolic reasoning with Traditional LLMs,
-Agentic frameworks, and AI Copilots.
+Provides high-level adapters, bridges, multi-agent ensembles, embodied agents,
+and MCP servers to interface Mayon-Cortex neuro-symbolic reasoning with
+Traditional LLMs, Agentic frameworks, and AI Copilots.
 
 The 5 Priority Integration Tools:
   1. cortex_think    - Multi-hop activation wave & path-ranked reasoning context
@@ -26,6 +26,11 @@ The 5 Priority Integration Tools:
   3. cortex_decide   - Structured decision planner & cross-domain conflict resolver
   4. cortex_validate - Post-generation hallucination & contradiction validation gate
   5. cortex_plan     - Strategic query complexity classifier & task decomposition
+
+Phase 2 Pillars:
+  - DualProcessRouter & HybridResponse (Pillar 1: System 1 / System 2 dynamic routing)
+  - CortexEnsemble & ConfidenceVoter   (Pillar 3: Federated multi-agent voting)
+  - EmbodiedCortexAgent & ActionRegistry (Pillar 4: Perceive-Reason-Act-Learn cycle)
 """
 
 from mayon_cortex.integration.cortex_llm_bridge import (
@@ -37,6 +42,22 @@ from mayon_cortex.integration.cortex_llm_bridge import (
     cortex_validate,
     cortex_plan,
 )
+from mayon_cortex.integration.dual_process_router import (
+    DualProcessRouter,
+    HybridResponse,
+)
+from mayon_cortex.integration.cortex_ensemble import (
+    CortexEnsemble,
+    ConfidenceVoter,
+    EnsembleResponse,
+    AgentResult,
+)
+from mayon_cortex.integration.embodied_agent import (
+    EmbodiedCortexAgent,
+    ActionRegistry,
+    ActionResult,
+    EmbodiedEpisode,
+)
 
 __all__ = [
     "CortexLLMBridge",
@@ -46,4 +67,14 @@ __all__ = [
     "cortex_decide",
     "cortex_validate",
     "cortex_plan",
+    "DualProcessRouter",
+    "HybridResponse",
+    "CortexEnsemble",
+    "ConfidenceVoter",
+    "EnsembleResponse",
+    "AgentResult",
+    "EmbodiedCortexAgent",
+    "ActionRegistry",
+    "ActionResult",
+    "EmbodiedEpisode",
 ]
